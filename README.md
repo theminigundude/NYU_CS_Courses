@@ -1,5 +1,5 @@
-###NYU Course Scheduler 
+### NYU Course Scheduler 
 
-###TODO
+### TODO
 - [ ] make to-do list
 
