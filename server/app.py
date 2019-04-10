@@ -11,34 +11,31 @@ Ctopic = ""
 
 # functions
 def remove_whitespace(input):
-    input = input.replace("\n", "")
-    input = input.replace(" ", "")
-    return input
-
-def Cnumber_func(input):
-    input = remove_whitespace(input)
-    input = input.replace(u"\u200b", "")
-    return input
-
-def Ctopic_func(input):
-    input = remove_whitespace(input)
-    input = input.replace("*", "")
-    input = input.replace(u"\u00a0", "")
-    return input
+    output = input.replace("\n", "")
+    output = output.strip()
+    output = output.replace(u"\u200b", "")
+    output = output.replace(u"\u00a0", "")
+    output = output.replace("*", "")
+    return output
 
 page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019")
 bsoup = BeautifulSoup(page.content, 'html.parser')
 big_div = bsoup.find(class_="schedule-listing")
 for small_div in big_div:
     if type(small_div) is not bs4.element.NavigableString:
-        Cnumber = list(small_div.children)[1].get_text()
-        Ctopic = list(small_div.children)[3].get_text()
-        Cnumber = Cnumber_func(Cnumber)
-        Ctopic = Ctopic_func(Ctopic)
+        #unprocessed info taken through bs4
+        course_info_raw = small_div.find_all('span')
 
-    new_object = {'class_number': Cnumber, 'class_topic': Ctopic}
-    CLASSES.append(new_object);
-del CLASSES[0]
+        #gets text and strips leading or trailing whitespace
+        course_info = list(map(lambda x: remove_whitespace(x.get_text()), course_info_raw))
+        
+        new_object = {'class_number': course_info[0].replace(" ", ""),
+                'class_topic': course_info[1],
+                'professor': course_info[2],
+                'time': course_info[3],
+                'room': course_info[4]
+                }
+        CLASSES.append(new_object);
 
 # configuration
 DEBUG = True
@@ -63,6 +60,10 @@ def all_classes():
 @app.route('/ping', methods=['GET'])
 def ping_pong():
     return ""
+
+@app.route('/')
+def root():
+    return "root"
 
 if __name__ == '__main__':
     app.run()

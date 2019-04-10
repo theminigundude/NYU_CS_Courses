@@ -1,10 +1,10 @@
 ### Prerequisites
 Python3 and Pip3.7 (or pip3)
 
-###Installing
+### Installing
 First, create a virtual environment
 ```
-python3 -m pip install --user virtualenv
+python3 -m virtualenv env
 ```
 
 After creating the virtual environment, start the environment using the following command.
