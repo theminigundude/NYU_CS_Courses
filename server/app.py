@@ -28,7 +28,7 @@ for small_div in big_div:
 
         #gets text and strips leading or trailing whitespace
         course_info = list(map(lambda x: remove_whitespace(x.get_text()), course_info_raw))
-        
+
         new_object = {'class_number': course_info[0].replace(" ", ""),
                 'class_topic': course_info[1],
                 'professor': course_info[2],
@@ -55,11 +55,6 @@ def all_classes():
         'classes': CLASSES,
         })
 
-
-# sanity check route
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return ""
 
 @app.route('/')
 def root():

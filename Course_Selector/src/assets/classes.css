@@ -1,0 +1,13 @@
+h1 {
+  color: red;
+}
+
+.vuecal__flex .vuecal__heading span :nth-child(4) {
+  display: none;
+}
+
+.class_calender {
+  color: white;
+  background-color: #57068c;
+  vertical-align: middle;
+}
