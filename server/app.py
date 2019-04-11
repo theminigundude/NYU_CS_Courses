@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import bs4
 import sys
 import requests
+import re
 
 CLASSES = []
 Cnumber = ""
@@ -11,12 +12,7 @@ Ctopic = ""
 
 # functions
 def remove_whitespace(input):
-    output = input.replace("\n", "")
-    output = output.strip()
-    output = output.replace(u"\u200b", "")
-    output = output.replace(u"\u00a0", "")
-    output = output.replace("*", "")
-    return output
+    return re.sub(r'\s+|\t|\n|[*]', " ", input).strip()
 
 page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019")
 bsoup = BeautifulSoup(page.content, 'html.parser')
@@ -29,7 +25,7 @@ for small_div in big_div:
         #gets text and strips leading or trailing whitespace
         course_info = list(map(lambda x: remove_whitespace(x.get_text()), course_info_raw))
 
-        new_object = {'class_number': course_info[0].replace(" ", ""),
+        new_object = {'class_number': course_info[0],
                 'class_topic': course_info[1],
                 'professor': course_info[2],
                 'time': course_info[3],
