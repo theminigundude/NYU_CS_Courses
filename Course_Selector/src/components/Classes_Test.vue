@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <h1>Classes Options for Fall 2019 NYU CS Classes</h1>
+      <h1>Class Options for Fall 2019 NYU CS Classes</h1>
       <br>
       <vue-cal selected-date="2019-09-09"
       :disable-views="['years', 'year', 'month']"
