@@ -1,5 +1,17 @@
-h1 {
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+html, body {
+  font-family: 'Raleway', 'sans-serif';
+}
+
+.nyu_main_color {
   color: #57068c;
+}
+.bg_nyu_main_color {
+  background-color: #57068c;
+}
+.bg_nyu_main_color_light {
+  background-color: #8900e1;
 }
 
 /* hide day of week */
@@ -16,4 +28,10 @@ h1 {
 /* disable calender "today" tint */
 .vuecal:not(.vuecal--day-view) .vuecal__cell.selected {
   background-color: #00000000;
+}
+
+@media only screen and (max-width: 385px) {
+  .noevents {
+    display: none;
+  }
 }
