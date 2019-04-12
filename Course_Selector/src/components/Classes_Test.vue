@@ -10,7 +10,9 @@
         <b-col md="12" class="my-1">
           <b-form-group label-cols-sm="2" label="Filter" class="mb-0">
             <b-input-group>
-              <b-form-input v-model="filter" placeholder="Search by professors or classes"></b-form-input>
+              <b-form-input v-model="filter"
+              placeholder="Search by professors or classes">
+              </b-form-input>
               <b-input-group-append>
                 <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
               </b-input-group-append>
@@ -23,7 +25,17 @@
             </b-form-group>
           </b-col> -->
 
-        <b-table show-empty stacked="md" :items="classes" :fields="table_Fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" @filtered="onFiltered">
+        <b-table
+        show-empty stacked="md"
+        :items="classes"
+        :fields="table_Fields"
+        :current-page="currentPage"
+        :per-page="perPage"
+        :filter="filter"
+        :sort-by.sync="sortBy"
+        :sort-desc.sync="sortDesc"
+        :sort-direction="sortDirection"
+        @filtered="onFiltered">
           <template slot="class_topic" slot-scope="row">
             {{ row.value }}
           </template>
@@ -48,7 +60,12 @@
 
         <b-row>
           <b-col md="12" class="my-1">
-            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" align="fill" class="my-0">
+            <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            align="fill"
+            class="my-0">
             </b-pagination>
           </b-col>
         </b-row>
@@ -56,7 +73,15 @@
       <div class="col-md-6">
         <h3 class="text-center bg_nyu_main_color_light text-white p-3">Timetable</h3>
         <br>
-        <vue-cal selected-date="2019-09-09" :disable-views="['years', 'year', 'month']" :time-from="8 * 60" :time-to="22 * 60" :events="events" hide-weekends hide-view-selector editable-events hideTitleBar disableViews style="height: 606px;">
+        <vue-cal
+        selected-date="2019-09-09"
+        :disable-views="['years', 'year', 'month']"
+        :time-from="8 * 60" :time-to="22 * 60"
+        :events="events"
+        hide-weekends hide-view-selector
+        editable-events hideTitleBar
+        disableViews
+        style="height: 606px;">
           <div class="noevents" slot="no-event">No Classes</div>
         </vue-cal>
       </div>
@@ -76,22 +101,23 @@ export default {
   name: 'classes_Homescreen',
   data() {
     return {
-      table_Fields: [{
+      table_Fields: [
+        {
           key: 'class_topic',
           label: 'Class Name',
           sortable: true,
-          sortDirection: 'desc'
+          sortDirection: 'desc',
         },
         {
           key: 'professor',
           label: 'Professor',
           sortable: true,
-          class: 'text-center'
+          class: 'text-center',
         },
         {
           key: 'actions',
-          label: 'Actions'
-        }
+          label: 'Actions',
+        },
       ],
       totalRows: 1,
       currentPage: 1,
@@ -101,7 +127,8 @@ export default {
       sortDirection: 'asc',
       filter: null,
       classes: [],
-      events: [{
+      events: [
+        {
           start: '2019-09-10 10:00',
           end: '2019-09-10 15:00',
           title: 'Intro to Programing',
@@ -120,18 +147,6 @@ export default {
       ],
     };
   },
-  computed: {
-    sortOptions() {
-      return this.fields
-        .filter(f => f.sortable)
-        .map(f => {
-          return {
-            text: f.label,
-            value: f.key
-          }
-        })
-    },
-  },
   components: {
     VueCal,
   },
@@ -141,8 +156,8 @@ export default {
   methods: {
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length
-      this.currentPage = 1
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
     },
     getClasses() {
       const path = 'http://localhost:5000/classes';
@@ -159,6 +174,6 @@ export default {
   },
   created() {
     this.getClasses();
-  }
+  },
 };
 </script>
