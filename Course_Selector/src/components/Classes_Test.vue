@@ -56,12 +56,13 @@
       <div class="col-md-6">
         <h3 class="text-center bg_nyu_main_color_light text-white p-3">Timetable</h3>
         <br>
-        <vue-cal selected-date="2019-09-09" :disable-views="['years', 'year', 'month']" :time-from="8 * 60" :time-to="22 * 60" :events="events" hide-weekends hide-view-selector editable-events hideTitleBar disableViews>
+        <vue-cal selected-date="2019-09-09" :disable-views="['years', 'year', 'month']" :time-from="8 * 60" :time-to="22 * 60" :events="events" hide-weekends hide-view-selector editable-events hideTitleBar disableViews style="height: 606px;">
           <div class="noevents" slot="no-event">No Classes</div>
         </vue-cal>
       </div>
     </div>
   </div>
+  <br><br>
 </div>
 </template>
 
