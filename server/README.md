@@ -27,3 +27,8 @@ To start the server, run the following command
 ```
 flask run
 ```
+
+### Database
+When setting up the database, make sure to have a file called DBinfo which stores
+the credentials for the sql server. For more information, look at DBinfo_template 
+for how to format the information

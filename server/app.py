@@ -12,7 +12,8 @@ Ctopic = ""
 
 # functions
 def remove_whitespace(input):
-    return re.sub(r'\s+|\t|\n|[*]', " ", input).strip()
+    output = re.sub(r'\s+|\t|\n|[*]|[\u200b]', " ", input).strip()
+    return output
 
 page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019")
 bsoup = BeautifulSoup(page.content, 'html.parser')
