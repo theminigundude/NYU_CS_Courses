@@ -26,8 +26,13 @@ for small_div in big_div:
         #gets text and strips leading or trailing whitespace
         course_info = list(map(lambda x: remove_whitespace(x.get_text()), course_info_raw))
 
-        new_object = {'class_number': course_info[0],
-                'class_topic': course_info[1],
+        new_object = {
+                # Start and end are tests ONLY. Plz parse
+                #add field short title
+                'start': '2019-09-13 10:00',
+                'end': '2019-09-13 15:00',
+                'class_number': course_info[0],
+                'title': course_info[1],
                 'professor': course_info[2],
                 'time': course_info[3],
                 'room': course_info[4]

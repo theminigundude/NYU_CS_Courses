@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,500');
 
 html, body {
-  font-family: 'Raleway', 'sans-serif';
+  font-family: 'Rubik', 'sans-serif';
 }
 
 .nyu_main_color {
@@ -13,7 +13,36 @@ html, body {
 .bg_nyu_main_color_light {
   background-color: #8900e1;
 }
-
+.bg_nyu_grey_color_light {
+  background-color: #b8b8b8;
+}
+.darkblue {
+  background-color: #28619e;
+}
+.lightblue {
+  background-color: #3dbbdb;
+}
+.darkgreen {
+  background-color: #007c70;
+}
+.lightgreen {
+  background-color: #489141;
+}
+.darkred {
+  background-color: #cb0200;
+}
+.lightred {
+  background-color: #d71e5e;
+}
+.orange {
+  background-color: #e86c00;
+}
+.yellow {
+  background-color: #ffc107;
+}
+.leisurered {
+  background-color: hsla(0,100%,70%,.85);
+}
 /* hide day of week */
 .vuecal__flex .vuecal__heading span :nth-child(4) {
   display: none;
@@ -21,7 +50,6 @@ html, body {
 
 .class_calender {
   color: white;
-  background-color: #57068c;
   vertical-align: middle;
 }
 
