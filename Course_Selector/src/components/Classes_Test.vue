@@ -24,6 +24,17 @@
               <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
             </b-form-group>
           </b-col> -->
+          <b-row>
+            <b-col md="12" class="my-1">
+              <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              align="fill"
+              class="my-0">
+              </b-pagination>
+            </b-col>
+          </b-row>
 
         <b-table
         show-empty stacked="md"
@@ -58,17 +69,6 @@
           </template>
         </b-table>
 
-        <b-row>
-          <b-col md="12" class="my-1">
-            <b-pagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="fill"
-            class="my-0">
-            </b-pagination>
-          </b-col>
-        </b-row>
       </div>
       <div class="col-md-6">
         <h3 class="text-center bg_nyu_main_color_light text-white p-3">Timetable</h3>

@@ -15,7 +15,7 @@ def remove_whitespace(input):
     output = re.sub(r'\s+|\t|\n|[*]|[\u200b]', " ", input).strip()
     return output
 
-page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019")
+page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019&level=UA")
 bsoup = BeautifulSoup(page.content, 'html.parser')
 big_div = bsoup.find(class_="schedule-listing")
 for small_div in big_div:
