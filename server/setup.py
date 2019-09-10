@@ -1,4 +1,4 @@
-import mysql.connector
+#import mysql.connector
 from sqlalchemy import *
 
 DB_INFO = "DBInfo"      #name of the file that stores db credentials
