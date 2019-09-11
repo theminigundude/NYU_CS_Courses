@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 CLASSES = []
 Cnumber = ""
 Ctopic = ""
+#Find the start and end date of the week given the current day
 today = datetime.today()
 start = today - timedelta(days= today.weekday())
 end = start + timedelta(days=6)
@@ -21,12 +22,23 @@ def remove_whitespace(input):
     output = re.sub(r'\s+|\t|\n|[*]|[\u200b]', " ", input).strip()
     return output
 
+#Remove the extra string when scrape
 def remove_extra(prof_name):
     if "Office Hours" in prof_name:
         output = prof_name.replace("Office Hours", "").strip()
         return output
     return prof_name
 
+#Remove the extra string in the course title
+def remove_extra_courses(course):
+    if "(No Prior Experience)" in course:
+        output = course.replace("(No Prior Experience)", "").strip()
+        return output
+    return course
+
+#Remove the section number for storing data
+def parse_course(course_number):
+    return "-".join(course_number.split("-",2)[:2])
 
 page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019&level=UA")
 bsoup = BeautifulSoup(page.content, 'html.parser')
@@ -44,8 +56,8 @@ for small_div in big_div:
                 #add field short title
                 'start': start_day,
                 'end': end_day,
-                'class_number': course_info[0],
-                'title': course_info[1],
+                'class_number': parse_course(course_info[0]),
+                'title': remove_extra_courses(course_info[1]),
                 'professor': remove_extra(course_info[2]),
                 'time': course_info[3],
                 'room': course_info[4],

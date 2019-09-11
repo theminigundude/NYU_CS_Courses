@@ -14,7 +14,8 @@
 - [ ] AWS to host server
 - [ ] drop down menu for schedule and courses
 - [ ] name, string of classes taken
-- [ ] firebase?
+- [ ] Implement Firebase
 - [ ] graph to store all the classes and stuff
 - [ ] career tree
 - [ ] make to-do list
+- [ ] Using Google Map API to hyperlink the location of the building
