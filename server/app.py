@@ -40,30 +40,51 @@ def remove_extra_courses(course):
 def parse_course(course_number):
     return "-".join(course_number.split("-",2)[:2])
 
+#Create a data object to store in the database
+def create_courses(number, title, description):
+    course_value = []
+    course_value.append(title)
+    course_value.append(description)
+    if number not in courses:
+        courses[number] = course_value
+
+
 page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019&level=UA")
 bsoup = BeautifulSoup(page.content, 'html.parser')
 big_div = bsoup.find(class_="schedule-listing")
-#print(big_div)
+courses = dict()
 for small_div in big_div:
     if type(small_div) is not bs4.element.NavigableString:
         #unprocessed info taken through bs4
         course_info_raw = small_div.find_all('span')
         #gets text and strips leading or trailing whitespace
         course_info = list(map(lambda x: remove_whitespace(x.get_text()), course_info_raw))
-        #print(len(course_info))
+        #assign the necessary variable
+        number = parse_course(course_info[0])
+        title = remove_extra_courses(course_info[1])
+        professor = remove_extra(course_info[2])
+        time = course_info[3]
+        room = course_info[4]
+        description = course_info[5]
+        #Create an object of all the values of courses and professor
         new_object = {
                 # Start and end are tests ONLY. Plz parse
                 #add field short title
                 'start': start_day,
                 'end': end_day,
-                'class_number': parse_course(course_info[0]),
-                'title': remove_extra_courses(course_info[1]),
-                'professor': remove_extra(course_info[2]),
-                'time': course_info[3],
-                'room': course_info[4],
-                'description': course_info[5]
+                'class_number': number,
+                'title': title,
+                'professor': professor,
+                'time': time,
+                'room': room,
+                'description': description
                 }
+
+        #Create a dictionary of course and its title and description
+        create_courses(number, title,description)
+        #print(course)
         CLASSES.append(new_object);
+
 
 # configuration
 DEBUG = True
