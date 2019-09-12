@@ -38,7 +38,10 @@ def remove_extra_courses(course):
 
 #Remove the section number for storing data
 def parse_course(course_number):
-    return "-".join(course_number.split("-",2)[:2])
+    value = course_number.split("-",2)
+    course_id = "-".join(value[:2])
+    course_section_number = value[2].split('(')[0].strip()
+    return course_id, course_section_number
 
 #Create a data object to store in the database
 def create_courses(number, title, description):
@@ -48,11 +51,27 @@ def create_courses(number, title, description):
     if number not in courses:
         courses[number] = course_value
 
+def create_courses_with_section_number(number, section_number, professor, location, time):
+    course_section_values = []
+    sections = dict()
+    #Add the values to the list
+    course_section_values.append(number)
+    course_section_values.append(section_number)
+    course_section_values.append(professor)
+    course_section_values.append(location)
+    course_section_values.append(time)
+    sections[section_number] = course_section_values
+    if number not in courses_with_section_number:
+        courses_with_section_number[number] = sections
+
 
 page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019&level=UA")
 bsoup = BeautifulSoup(page.content, 'html.parser')
 big_div = bsoup.find(class_="schedule-listing")
+
 courses = dict()
+courses_with_section_number = dict()
+
 for small_div in big_div:
     if type(small_div) is not bs4.element.NavigableString:
         #unprocessed info taken through bs4
@@ -60,7 +79,7 @@ for small_div in big_div:
         #gets text and strips leading or trailing whitespace
         course_info = list(map(lambda x: remove_whitespace(x.get_text()), course_info_raw))
         #assign the necessary variable
-        number = parse_course(course_info[0])
+        number,section_number = parse_course(course_info[0])
         title = remove_extra_courses(course_info[1])
         professor = remove_extra(course_info[2])
         time = course_info[3]
@@ -79,12 +98,13 @@ for small_div in big_div:
                 'room': room,
                 'description': description
                 }
-
         #Create a dictionary of course and its title and description
         create_courses(number, title,description)
+        create_courses_with_section_number(number, section_number, professor, room, time)
         #print(course)
         CLASSES.append(new_object);
 
+print(courses_with_section_number)
 
 # configuration
 DEBUG = True
