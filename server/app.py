@@ -51,20 +51,24 @@ def create_courses(number, title, description):
     if number not in courses:
         courses[number] = course_value
 
+#Creata a dictionary of courses as key and list of another dicts with course_section as key
 def create_courses_with_section_number(number, section_number, professor, location, time):
     course_section_values = []
     sections = dict()
     #Add the values to the list
-    course_section_values.append(number)
-    course_section_values.append(section_number)
     course_section_values.append(professor)
     course_section_values.append(location)
     course_section_values.append(time)
     sections[section_number] = course_section_values
     if number not in courses_with_section_number:
-        courses_with_section_number[number] = sections
+        list_of_section = []
+        list_of_section.append(sections)
+        courses_with_section_number[number] = list_of_section
+    else:
+        courses_with_section_number[number].append(sections)
 
 
+#Scrape the data from the website
 page = requests.get("https://cs.nyu.edu/dynamic/courses/schedule/?semester=fall_2019&level=UA")
 bsoup = BeautifulSoup(page.content, 'html.parser')
 big_div = bsoup.find(class_="schedule-listing")
@@ -85,10 +89,12 @@ for small_div in big_div:
         time = course_info[3]
         room = course_info[4]
         description = course_info[5]
-        #Create an object of all the values of courses and professor
-        new_object = {
+
+        if 'Recitation' not in title:
+            # Create an object of all the values of courses and professor
+            new_object = {
                 # Start and end are tests ONLY. Plz parse
-                #add field short title
+                # add field short title
                 'start': start_day,
                 'end': end_day,
                 'class_number': number,
@@ -97,14 +103,12 @@ for small_div in big_div:
                 'time': time,
                 'room': room,
                 'description': description
-                }
-        #Create a dictionary of course and its title and description
-        create_courses(number, title,description)
-        create_courses_with_section_number(number, section_number, professor, room, time)
-        #print(course)
-        CLASSES.append(new_object);
+            }
+            # Create a dictionary of course and its title and description
+            create_courses(number, title, description)
+            create_courses_with_section_number(number, section_number, professor, room, time)
+            CLASSES.append(new_object);
 
-print(courses_with_section_number)
 
 # configuration
 DEBUG = True

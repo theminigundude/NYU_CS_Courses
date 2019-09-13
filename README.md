@@ -16,3 +16,4 @@
 - [ ] career tree
 - [ ] make to-do list
 - [ ] Using Google Map API to hyperlink the location of the building
+- [ ] Design a way to have recitation object
